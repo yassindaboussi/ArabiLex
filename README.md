@@ -54,5 +54,5 @@
   [![GitHub forks](https://img.shields.io/github/forks/yassindaboussi/ArabiLex?style=social)](https://github.com/yassindaboussi/ArabiLex)
   
   <br><br>
-  <a href="https://yassindaboussi.github.io/ArabiLex/">🚀 جرب التطبيق الآن</a>
+  <a href="https://arabilex.netlify.app/">🚀 جرب التطبيق الآن</a>
 </div>
