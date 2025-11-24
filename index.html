@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرّك بحث الكلمات العربية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h1 class="hero-title">محرّك بحث الكلمات العربية</h1>
+                <p class="hero-description">اكتشف الكلمات العربية بطرق متنوعة ومتقدمة</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalWordsCount">---</span>
+                        <span class="stat-label">كلمة</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">طرق بحث</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-background">
+            <div class="floating-letters">
+                <span class="floating-letter">أ</span>
+                <span class="floating-letter">ب</span>
+                <span class="floating-letter">ت</span>
+                <span class="floating-letter">ث</span>
+                <span class="floating-letter">ج</span>
+                <span class="floating-letter">ح</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Enhanced Navigation Tabs -->
+        <nav class="tab-navigation">
+            <div class="tab-nav-wrapper">
+                <button class="tab-nav-item active" data-tab="startsWith">
+                    <div class="tab-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="tab-content">
+                        <span class="tab-title">تبدأ بحرف</span>
+                        <span class="tab-desc">البحث بالحرف الأول</span>
+                    </div>
+                </button>
+                <button class="tab-nav-item" data-tab="endsWith">
+                    <div class="tab-icon">
+                        <i class="fas fa-step-forward fa-rotate-180"></i>
+                    </div>
+                    <div class="tab-content">
+                        <span class="tab-title">تنتهي بحرف</span>
+                        <span class="tab-desc">البحث بالحرف الأخير</span>
+                    </div>
+                </button>
+                <button class="tab-nav-item" data-tab="contains">
+                    <div class="tab-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="tab-content">
+                        <span class="tab-title">تحتوي على</span>
+                        <span class="tab-desc">البحث بالأحرف الوسطية</span>
+                    </div>
+                </button>
+                <button class="tab-nav-item" data-tab="anyOrder">
+                    <div class="tab-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <div class="tab-content">
+                        <span class="tab-title">أحرف بأي ترتيب</span>
+                        <span class="tab-desc">بحث ذكي متقدم</span>
+                    </div>
+                </button>
+                <button class="tab-nav-item" data-tab="startEnd">
+                    <div class="tab-icon">
+                        <i class="fas fa-arrows-alt-h"></i>
+                    </div>
+                    <div class="tab-content">
+                        <span class="tab-title">البداية والنهاية</span>
+                        <span class="tab-desc">بحث دقيق ومحدد</span>
+                    </div>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Tab Content Areas -->
+        <div class="tab-content-container">
+            <!-- Starts With Tab -->
+            <section class="tab-pane active" id="startsWith">
+                <div class="search-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="panel-title">
+                            <h2>كلمات تبدأ بحرف معين</h2>
+                            <p>اختر الحرف الذي تريد البحث عن الكلمات التي تبدأ به</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Letter Selection -->
+                    <div class="quick-select-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-mouse-pointer"></i>
+                            اختيار سريع
+                        </h3>
+                        <div class="letters-grid" id="startLetterGrid"></div>
+                    </div>
+
+                    <!-- Advanced Search -->
+                    <div class="advanced-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-keyboard"></i>
+                            بحث متقدم
+                        </h3>
+                        <div class="search-form">
+                            <div class="form-description">
+                                أدخل عدة أحرف للبحث عن كلمات تبدأ بهذه الأحرف بنفس الترتيب
+                                <div class="example-tag">
+                                    <i class="fas fa-lightbulb"></i>
+                                    مثال: "ابت" للبحث عن كلمات مثل "ابتسام"
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <input type="text" class="form-input" id="startSearchInput" placeholder="أدخل الأحرف هنا...">
+                                    <div class="input-icon">
+                                        <i class="fas fa-edit"></i>
+                                    </div>
+                                </div>
+                                <button class="search-btn primary" onclick="searchStartsWith()">
+                                    <i class="fas fa-search"></i>
+                                    <span>ابحث الآن</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ends With Tab -->
+            <section class="tab-pane" id="endsWith">
+                <div class="search-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-step-forward fa-rotate-180"></i>
+                        </div>
+                        <div class="panel-title">
+                            <h2>كلمات تنتهي بحرف معين</h2>
+                            <p>اكتشف الكلمات التي تنتهي بالحرف المختار</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-select-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-mouse-pointer"></i>
+                            اختيار سريع
+                        </h3>
+                        <div class="letters-grid" id="endLetterGrid"></div>
+                    </div>
+
+                    <div class="advanced-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-keyboard"></i>
+                            بحث متقدم
+                        </h3>
+                        <div class="search-form">
+                            <div class="form-description">
+                                أدخل عدة أحرف للبحث عن كلمات تنتهي بهذه الأحرف بنفس الترتيب
+                                <div class="example-tag">
+                                    <i class="fas fa-lightbulb"></i>
+                                    مثال: "ون" للبحث عن كلمات مثل "يعملون"
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <input type="text" class="form-input" id="endSearchInput" placeholder="أدخل الأحرف هنا...">
+                                    <div class="input-icon">
+                                        <i class="fas fa-edit"></i>
+                                    </div>
+                                </div>
+                                <button class="search-btn primary" onclick="searchEndsWith()">
+                                    <i class="fas fa-search"></i>
+                                    <span>ابحث الآن</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contains Tab -->
+            <section class="tab-pane" id="contains">
+                <div class="search-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="panel-title">
+                            <h2>كلمات تحتوي على أحرف معينة</h2>
+                            <p>ابحث عن الكلمات التي تحتوي على تسلسل معين من الأحرف</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-select-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-mouse-pointer"></i>
+                            اختيار سريع
+                        </h3>
+                        <div class="letters-grid" id="containsLetterGrid"></div>
+                    </div>
+
+                    <div class="advanced-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-keyboard"></i>
+                            بحث متقدم
+                        </h3>
+                        <div class="search-form">
+                            <div class="form-description">
+                                ابحث عن كلمات تحتوي على تسلسل معين من الأحرف في أي مكان بالكلمة
+                                <div class="example-tag">
+                                    <i class="fas fa-lightbulb"></i>
+                                    مثال: "كت" للبحث عن كلمات مثل "مكتب" أو "كتاب"
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <input type="text" class="form-input" id="containsSearchInput" placeholder="أدخل الأحرف هنا...">
+                                    <div class="input-icon">
+                                        <i class="fas fa-edit"></i>
+                                    </div>
+                                </div>
+                                <button class="search-btn primary" onclick="searchContains()">
+                                    <i class="fas fa-search"></i>
+                                    <span>ابحث الآن</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Any Order Tab -->
+            <section class="tab-pane" id="anyOrder">
+                <div class="search-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-random"></i>
+                        </div>
+                        <div class="panel-title">
+                            <h2>أحرف بأي ترتيب - بحث ذكي</h2>
+                            <p>ابحث عن كلمات تحتوي على مجموعة أحرف بغض النظر عن ترتيبها</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-select-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-mouse-pointer"></i>
+                            اختيار سريع
+                        </h3>
+                        <div class="letters-grid" id="containsAnyOrderGrid"></div>
+                    </div>
+
+                    <div class="advanced-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-brain"></i>
+                            بحث ذكي
+                        </h3>
+                        <div class="search-form">
+                            <div class="form-description">
+                                أدخل مجموعة من الأحرف وسيتم البحث عن كلمات تحتوي عليها جميعاً بأي ترتيب
+                                <div class="example-tag">
+                                    <i class="fas fa-lightbulb"></i>
+                                    مثال: "كتب" سيجد "كتاب" و "بكت" و "تبك"
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <input type="text" class="form-input" id="containsAnyOrderInput" placeholder="أدخل الأحرف هنا...">
+                                    <div class="input-icon">
+                                        <i class="fas fa-brain"></i>
+                                    </div>
+                                </div>
+                                <button class="search-btn primary" onclick="searchContainsAnyOrder()">
+                                    <i class="fas fa-search"></i>
+                                    <span>ابحث الآن</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Start and End Tab -->
+            <section class="tab-pane" id="startEnd">
+                <div class="search-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-arrows-alt-h"></i>
+                        </div>
+                        <div class="panel-title">
+                            <h2>البداية والنهاية - بحث دقيق</h2>
+                            <p>ابحث عن كلمات بحروف محددة في البداية والنهاية</p>
+                        </div>
+                    </div>
+
+                    <div class="advanced-section">
+                        <h3 class="section-heading">
+                            <i class="fas fa-crosshairs"></i>
+                            بحث دقيق ومحدد
+                        </h3>
+                        <div class="search-form">
+                            <div class="form-description">
+                                حدد كيف تبدأ الكلمة وكيف تنتهي للحصول على نتائج دقيقة
+                                <div class="example-tag">
+                                    <i class="fas fa-lightbulb"></i>
+                                    مثال: تبدأ بـ "مد" وتنتهي بـ "ة" ستجد "مدرسة"
+                                </div>
+                            </div>
+                            <div class="dual-input-container">
+                                <div class="dual-input-group">
+                                    <div class="dual-input-section">
+                                        <label class="input-label">
+                                            <i class="fas fa-play"></i>
+                                            تبدأ بـ
+                                        </label>
+                                        <div class="input-wrapper">
+                                            <input type="text" class="form-input" id="startEndStartInput" placeholder="الأحرف الأولى">
+                                            <div class="input-icon">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="connector-element">
+                                        <div class="connector-line"></div>
+                                        <div class="connector-icon">
+                                            <i class="fas fa-arrows-alt-h"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="dual-input-section">
+                                        <label class="input-label">
+                                            <i class="fas fa-step-forward fa-rotate-180"></i>
+                                            تنتهي بـ
+                                        </label>
+                                        <div class="input-wrapper">
+                                            <input type="text" class="form-input" id="startEndEndInput" placeholder="الأحرف الأخيرة">
+                                            <div class="input-icon">
+                                                <i class="fas fa-step-forward fa-rotate-180"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button class="search-btn primary large" onclick="searchStartsAndEndsWith()">
+                                    <i class="fas fa-search"></i>
+                                    <span>ابحث الآن</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Enhanced Results Section -->
+    <section id="resultsSection" class="results-section" style="display: none;">
+        <div class="results-container">
+            <div class="results-header">
+                <div class="results-title-section">
+                    <div class="results-icon">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <div class="results-info">
+                        <h2 id="resultsTitle" class="results-title"></h2>
+                        <div class="results-meta">
+                            <span id="resultsCount" class="results-count"></span>
+                            <span class="results-time" id="searchTime"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="results-actions">
+                    <button class="action-btn danger" onclick="clearResults()">
+                        <i class="fas fa-times"></i>
+                        مسح النتائج
+                    </button>
+                </div>
+            </div>
+            <div class="results-body">
+                <div id="resultsContent" class="results-content"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Loading Indicator -->
+    <div id="loadingIndicator" class="loading-overlay" style="display: none;">
+        <div class="loading-container">
+            <div class="loading-animation">
+                <div class="loading-spinner"></div>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="loading-text">
+                <h3 class="loading-title">جاري البحث...</h3>
+                <p class="loading-subtitle">يرجى الانتظار قليلاً</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="notification-toast">
+        <div class="toast-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="toast-content">
+            <div class="toast-title">نجح!</div>
+            <div class="toast-message">تم تحميل البيانات بنجاح</div>
+        </div>
+        <button class="toast-close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
